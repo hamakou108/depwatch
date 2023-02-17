@@ -7,7 +7,9 @@ description = ""
 authors = [
     {name = "hamakou108", email = "hamakou108@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "typer[all]>=0.7.0",
+]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
