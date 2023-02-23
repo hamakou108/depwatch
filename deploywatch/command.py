@@ -1,17 +1,7 @@
-from enum import Enum
 from dotenv import load_dotenv
 from datetime import datetime
 
 from deploywatch.repository import get_repository_history
-
-
-class Scope(str, Enum):
-    all = "all"
-    code = "code"
-    deployment = "deployment"
-
-    def is_code(self) -> bool:
-        return self.value in (self.all, self.code)
 
 
 class History:
@@ -47,13 +37,11 @@ class History:
 
 
 
-def generate_histories(name: str, scope: Scope):
+def generate_histories(name: str, code_only: bool):
     load_dotenv()
-    repository_histories = []
     histories = []
 
-    if scope.is_code():
-        repository_histories = get_repository_history(name)
+    repository_histories = get_repository_history(name)
 
     # CircleCI
 
