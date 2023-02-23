@@ -1,5 +1,5 @@
 from deploywatch import command
-from deploywatch.command import Scope, History, generate_histories
+from deploywatch.command import History, generate_histories
 from deploywatch.repository import RepositoryHistory
 
 from datetime import datetime
@@ -34,4 +34,4 @@ def test_generate_histories(mocker):
         ),
     ]
 
-    assert generate_histories('foo', Scope('all')) == expected
+    assert generate_histories('foo', False) == expected

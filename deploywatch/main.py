@@ -1,14 +1,14 @@
 import typer
 from rich import print
 
-from deploywatch.command import Scope, History, generate_histories
+from deploywatch.command import History, generate_histories
 
 
 def main(
         name: str,
-        scope: Scope = Scope.all
+        code_only: bool = typer.Option(False, help="do not retrieve deployment histories from CI")
 ):
-    histories = generate_histories(name, scope)
+    histories = generate_histories(name, code_only)
     print(",".join(History.keys()))
     for h in histories:
         print(",".join([v.isoformat() for v in h.values()]))
