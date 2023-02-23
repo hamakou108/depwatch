@@ -1,11 +1,17 @@
-from datetime import datetime
 from enum import Enum
+from dotenv import load_dotenv
+from datetime import datetime
+
+from deploywatch.repository import get_repository_history
 
 
 class Scope(str, Enum):
     all = "all"
     code = "code"
     deployment = "deployment"
+
+    def is_code(self) -> bool:
+        return self.value in (self.all, self.code)
 
 
 class History:
@@ -40,14 +46,22 @@ class History:
                 and self.deployed_at == other.deployed_at)
 
 
-def generate_histories():
-    # GitHub
+
+def generate_histories(name: str, scope: Scope):
+    load_dotenv()
+    repository_histories = []
+    histories = []
+
+    if scope.is_code():
+        repository_histories = get_repository_history(name)
+
     # CircleCI
 
-    return [
-        History(
-            datetime.fromisoformat('2023-02-23T10:00:00+00:00'),
-            datetime.fromisoformat('2023-02-23T11:00:00+00:00'),
-            datetime.fromisoformat('2023-02-23T11:30:00+00:00'),
-        )
-    ]
+    for rh in repository_histories:
+        histories.append(History(
+            rh.first_committed_at,
+            rh.merged_at,
+            datetime.fromisoformat('2023-02-23T11:30:00+00:00')
+        ))
+
+    return histories

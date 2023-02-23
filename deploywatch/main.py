@@ -1,15 +1,14 @@
 import typer
-from deploywatch.command import Scope
 from rich import print
 
-from command import History, generate_histories
+from deploywatch.command import Scope, History, generate_histories
 
 
 def main(
         name: str,
         scope: Scope = Scope.all
 ):
-    histories = generate_histories()
+    histories = generate_histories(name, scope)
     print(",".join(History.keys()))
     for h in histories:
         print(",".join([v.isoformat() for v in h.values()]))
