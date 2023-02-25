@@ -1,13 +1,23 @@
+from unittest.mock import patch, Mock
+
 from deploywatch import command
-from deploywatch.command import History, generate_histories
-from deploywatch.repository import RepositoryHistory
-from deploywatch.deployment import DeploymentHistory
+from deploywatch.command import generate_histories
+from deploywatch.history import History, RepositoryHistory, DeploymentHistory
 
 from datetime import datetime
 
 
-def fake_get_repository_history(name: str):
-    return [
+class TestCommand:
+    @patch.object(command, 'write_histories')
+    @patch.object(command, 'get_deployment_history', return_value=[
+        DeploymentHistory(
+            datetime.fromisoformat('2023-02-23T11:15:00+00:00'),
+        ),
+        DeploymentHistory(
+            datetime.fromisoformat('2023-02-23T11:30:00+00:00'),
+        ),
+    ])
+    @patch.object(command, 'get_repository_history', return_value=[
         RepositoryHistory(
             datetime.fromisoformat('2023-02-23T10:00:00+00:00'),
             datetime.fromisoformat('2023-02-23T11:00:00+00:00'),
@@ -18,26 +28,14 @@ def fake_get_repository_history(name: str):
             datetime.fromisoformat('2023-02-23T11:15:00+00:00'),
             '12d4c5f2a123b6fb77eccb57be1be3a29438fadb',
         ),
-    ]
-
-
-def fake_get_deployment_history(name: str, sha_list: list):
-    return [
-        DeploymentHistory(
-            datetime.fromisoformat('2023-02-23T11:15:00+00:00'),
-        ),
-        DeploymentHistory(
-            datetime.fromisoformat('2023-02-23T11:30:00+00:00'),
-        ),
-    ]
-
-
-class TestCommand:
-    def test_generate_histories(self, mocker):
-        mocker.patch.object(command, 'get_repository_history', fake_get_repository_history)
-        mocker.patch.object(command, 'get_deployment_history', fake_get_deployment_history)
-
-        expected = [
+    ])
+    def test_generate_histories(
+            self,
+            get_repository_history_mock: Mock,
+            get_deployment_history_mock: Mock,
+            write_histories_mock: Mock,
+    ):
+        expected_histories = [
             History(
                 datetime.fromisoformat('2023-02-23T10:00:00+00:00'),
                 datetime.fromisoformat('2023-02-23T11:00:00+00:00'),
@@ -50,4 +48,9 @@ class TestCommand:
             ),
         ]
 
-        assert generate_histories('foo', False) == expected
+        generate_histories('hamakou108/some_project', False)
+        get_repository_history_mock.assert_called_once_with('hamakou108/some_project')
+        get_deployment_history_mock.assert_called_once_with(
+            'hamakou108/some_project',
+            ['cbd1519fd8b7daff2655346676065f844a2ef3df', '12d4c5f2a123b6fb77eccb57be1be3a29438fadb'])
+        write_histories_mock.assert_called_once_with('output.csv', expected_histories)
