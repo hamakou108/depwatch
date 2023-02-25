@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 from deploywatch.repository import get_repository_history
+from deploywatch.deployment import get_deployment_history
 
 
 class History:
@@ -36,7 +37,6 @@ class History:
                 and self.deployed_at == other.deployed_at)
 
 
-
 def generate_histories(name: str, code_only: bool):
     load_dotenv()
     histories = []
@@ -44,12 +44,16 @@ def generate_histories(name: str, code_only: bool):
     repository_histories = get_repository_history(name)
 
     # CircleCI
+    deployment_histories = []
+    if not code_only:
+        sha_list = [rh.merge_commit_sha for rh in repository_histories]
+        deployment_histories = get_deployment_history(name, sha_list)
 
-    for rh in repository_histories:
+    for rh, dh in zip(repository_histories, deployment_histories):
         histories.append(History(
             rh.first_committed_at,
             rh.merged_at,
-            datetime.fromisoformat('2023-02-23T11:30:00+00:00')
+            dh.deployed_at,
         ))
 
     return histories

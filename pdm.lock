@@ -80,6 +80,16 @@ requires_python = ">=3.6"
 summary = "plugin and hook calling mechanisms for python"
 
 [[package]]
+name = "pycircleci"
+version = "0.6.1"
+requires_python = ">=3.6"
+summary = "Python client for CircleCI API"
+dependencies = [
+    "requests",
+    "requests-toolbelt",
+]
+
+[[package]]
 name = "pycparser"
 version = "2.21"
 requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
@@ -159,6 +169,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "requests-toolbelt"
+version = "0.10.1"
+requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+summary = "A utility belt for advanced users of python-requests"
+dependencies = [
+    "requests<3.0.0,>=2.0.1",
+]
+
+[[package]]
 name = "rich"
 version = "12.6.0"
 requires_python = ">=3.6.3,<4.0.0"
@@ -210,7 +229,7 @@ summary = "Module for decorators, wrappers and monkey patching."
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:2ebbb705828134062a299803264842ab57864eea53f64f2ab84c9be7099f52e5"
+content_hash = "sha256:e4f7f1e09f48710432c8c248290089f65c52a6f0b6a44686608cc248b8dd8bc1"
 
 [metadata.files]
 "attrs 22.2.0" = [
@@ -409,6 +428,10 @@ content_hash = "sha256:2ebbb705828134062a299803264842ab57864eea53f64f2ab84c9be70
     {url = "https://files.pythonhosted.org/packages/9e/01/f38e2ff29715251cf25532b9082a1589ab7e4f571ced434f98d0139336dc/pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {url = "https://files.pythonhosted.org/packages/a1/16/db2d7de3474b6e37cbb9c008965ee63835bba517e22cdb8c35b5116b5ce1/pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
+"pycircleci 0.6.1" = [
+    {url = "https://files.pythonhosted.org/packages/23/30/ba6c5873be730166bf94caec052cb74364af95ab5c59bec7c5411ef45916/pycircleci-0.6.1-py3-none-any.whl", hash = "sha256:781c5465fbaef5c52e937f21fa1c87379b397ec447bbe3eead3ab49c0016f438"},
+    {url = "https://files.pythonhosted.org/packages/bf/11/c7117788c9e0d6d0581a48f9b9e4feabedd1124a15ab3be12a490d631a38/pycircleci-0.6.1.tar.gz", hash = "sha256:2fdae4526e510bd323add42708b444c9c8565e70f69dc1b156a50404d0098663"},
+]
 "pycparser 2.21" = [
     {url = "https://files.pythonhosted.org/packages/5e/0b/95d387f5f4433cb0f53ff7ad859bd2c6051051cebbb564f139a999ab46de/pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
     {url = "https://files.pythonhosted.org/packages/62/d5/5f610ebe421e85889f2e55e33b7f9a6795bd982198517d912eb1c76e1a53/pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
@@ -452,6 +475,10 @@ content_hash = "sha256:2ebbb705828134062a299803264842ab57864eea53f64f2ab84c9be70
 "requests 2.28.2" = [
     {url = "https://files.pythonhosted.org/packages/9d/ee/391076f5937f0a8cdf5e53b701ffc91753e87b07d66bae4a09aa671897bf/requests-2.28.2.tar.gz", hash = "sha256:98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"},
     {url = "https://files.pythonhosted.org/packages/d2/f4/274d1dbe96b41cf4e0efb70cbced278ffd61b5c7bb70338b62af94ccb25b/requests-2.28.2-py3-none-any.whl", hash = "sha256:64299f4909223da747622c030b781c0d7811e359c37124b4bd368fb8c6518baa"},
+]
+"requests-toolbelt 0.10.1" = [
+    {url = "https://files.pythonhosted.org/packages/05/d3/bf87a36bff1cb88fd30a509fd366c70ec30676517ee791b2f77e0e29817a/requests_toolbelt-0.10.1-py2.py3-none-any.whl", hash = "sha256:18565aa58116d9951ac39baa288d3adb5b3ff975c4f25eee78555d89e8f247f7"},
+    {url = "https://files.pythonhosted.org/packages/0c/4c/07f01c6ac44f7784fa399137fbc8d0cdc1b5d35304e8c0f278ad82105b58/requests-toolbelt-0.10.1.tar.gz", hash = "sha256:62e09f7ff5ccbda92772a29f394a49c3ad6cb181d568b1337626b2abb628a63d"},
 ]
 "rich 12.6.0" = [
     {url = "https://files.pythonhosted.org/packages/11/23/814edf09ec6470d52022b9e95c23c1bef77f0bc451761e1504ebd09606d3/rich-12.6.0.tar.gz", hash = "sha256:ba3a3775974105c221d31141f2c116f4fd65c5ceb0698657a11e9f295ec93fd0"},
