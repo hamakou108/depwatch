@@ -6,7 +6,7 @@ class History:
             self,
             first_committed_at: datetime,
             merged_at: datetime,
-            deployed_at: datetime,
+            deployed_at: datetime | None,
     ):
         self.first_committed_at = first_committed_at
         self.merged_at = merged_at
