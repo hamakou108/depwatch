@@ -2,17 +2,7 @@ from github import Github
 import os
 from datetime import datetime, timezone
 
-
-class RepositoryHistory:
-    def __init__(
-            self,
-            first_committed_at: datetime,
-            merged_at: datetime,
-            merge_commit_sha: str
-    ):
-        self.first_committed_at = first_committed_at
-        self.merged_at = merged_at
-        self.merge_commit_sha = merge_commit_sha
+from deploywatch.history import RepositoryHistory
 
 
 def get_repository_history(name: str) -> list[RepositoryHistory]:
