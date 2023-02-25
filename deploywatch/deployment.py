@@ -5,12 +5,12 @@ from pycircleci.api import Api
 from deploywatch.history import DeploymentHistory
 
 
-def get_deployment_history(name: str, sha_list: list) -> list[DeploymentHistory]:
+def get_deployment_history(name: str, sha_list: list, limit: int) -> list[DeploymentHistory]:
     histories = []
 
     ci = Api(token=os.environ.get('CIRCLECI_ACCESS_TOKEN'), url='https://circleci.com/api')
     user_name, project = name.split('/')
-    pipelines = ci.get_project_pipelines(user_name, project)
+    pipelines = ci.get_project_pipelines(user_name, project, paginate=True, limit=limit)
 
     for p in pipelines:
         if len(p.get('errors')) != 0:
