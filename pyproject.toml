@@ -26,6 +26,7 @@ linter = [
     "mypy>=1.0.1",
     "flake8>=6.0.0",
     "Flake8-pyproject>=1.2.2",
+    "black>=23.1.0",
 ]
 
 [build-system]
@@ -38,4 +39,6 @@ ignore_missing_imports = true
 
 [tool.flake8]
 select = ['F']
-max-line-length = 120
+
+[tool.black]
+line-length = 88

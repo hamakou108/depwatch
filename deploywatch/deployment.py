@@ -8,17 +8,21 @@ from deploywatch.history import DeploymentHistory
 def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentHistory]:
     histories = []
 
-    ci = Api(token=os.environ.get('CIRCLECI_ACCESS_TOKEN'), url='https://circleci.com/api')
-    user_name, project = name.split('/')
-    pipelines = ci.get_project_pipelines(user_name, project, branch=base, paginate=True, limit=limit)
+    ci = Api(
+        token=os.environ.get("CIRCLECI_ACCESS_TOKEN"), url="https://circleci.com/api"
+    )
+    user_name, project = name.split("/")
+    pipelines = ci.get_project_pipelines(
+        user_name, project, branch=base, paginate=True, limit=limit
+    )
 
     for p in pipelines:
-        if len(p.get('errors')) != 0:
+        if len(p.get("errors")) != 0:
             continue
 
-        workflows = ci.get_pipeline_workflow(p.get('id'))
+        workflows = ci.get_pipeline_workflow(p.get("id"))
 
-        stopped_at_list = [w.get('stopped_at') for w in workflows]
+        stopped_at_list = [w.get("stopped_at") for w in workflows]
         latest_stopped_at = None
         for s in stopped_at_list:
             if s is None:
@@ -31,6 +35,8 @@ def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentH
         if latest_stopped_at is None:
             continue
 
-        histories.append(DeploymentHistory(latest_stopped_at, p.get('vcs').get('revision')))
+        histories.append(
+            DeploymentHistory(latest_stopped_at, p.get("vcs").get("revision"))
+        )
 
     return histories
