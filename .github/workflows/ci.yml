@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+    branches: master
+  pull_request:
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-pep582: true
+      - name: Install dependencies
+        run: pdm install
+      - name: Lint
+        run: pdm run
+      - name: Test with pytest
+        run: |
+          pytest  

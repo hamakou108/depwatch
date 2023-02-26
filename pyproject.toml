@@ -29,6 +29,11 @@ linter = [
     "black>=23.1.0",
 ]
 
+[tool.pdm.scripts]
+check_type = "mypy depwatch tests"
+check_lint = "flake8 depwatch tests"
+check_format = "black --check depwatch tests"
+
 [build-system]
 requires = ["pdm-pep517>=1.0"]
 build-backend = "pdm.pep517.api"
