@@ -18,4 +18,6 @@ def generate_histories(name: str, code_only: bool, limit: int):
     if not code_only:
         deployment_histories = get_deployment_history(name, base, limit)
 
-    write_histories('output.csv', create_histories(repository_histories, deployment_histories))
+    write_histories(
+        "output.csv", create_histories(repository_histories, deployment_histories)
+    )
