@@ -21,10 +21,10 @@ jobs:
       - name: Install dependencies
         run: pdm install
       - name: Check type
-        run: pdm run check-type
+        run: pdm run check_type
       - name: Check Lint
-        run: pdm run check-lint
+        run: pdm run check_lint
       - name: Check Format
-        run: pdm run check-format
+        run: pdm run check_format
       - name: Test
         run: pdm run test
