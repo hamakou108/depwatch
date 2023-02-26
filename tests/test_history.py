@@ -1,5 +1,5 @@
 from datetime import datetime
-from deploywatch.history import (
+from depwatch.history import (
     DeploymentHistory,
     History,
     RepositoryHistory,

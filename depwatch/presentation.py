@@ -1,7 +1,7 @@
 import csv
 import os
 
-from deploywatch.history import History
+from depwatch.history import History
 
 
 def write_histories(filename: str, histories: list[History]):

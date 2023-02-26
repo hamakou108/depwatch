@@ -1,0 +1,2 @@
+class DepwatchException(Exception):
+    pass

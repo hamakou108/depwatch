@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
 
-from deploywatch.history import create_histories
-from deploywatch.repository import get_main_branch, get_repository_history
-from deploywatch.deployment import get_deployment_history
-from deploywatch.presentation import write_histories
+from depwatch.history import create_histories
+from depwatch.repository import get_main_branch, get_repository_history
+from depwatch.deployment import get_deployment_history
+from depwatch.presentation import write_histories
 
 
 def generate_histories(name: str, code_only: bool, limit: int):

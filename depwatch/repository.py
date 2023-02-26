@@ -1,9 +1,9 @@
 from github import Github
 import os
 from datetime import datetime, timezone
-from deploywatch.exception import DeployWatchException
+from depwatch.exception import DepwatchException
 
-from deploywatch.history import RepositoryHistory
+from depwatch.history import RepositoryHistory
 
 
 def get_main_branch(name: str) -> str:
@@ -17,7 +17,7 @@ def get_main_branch(name: str) -> str:
     elif "master" in [b.name for b in branches]:
         return "master"
     else:
-        raise DeployWatchException("'main' or 'master' branch was not found")
+        raise DepwatchException("'main' or 'master' branch was not found")
 
 
 def get_repository_history(name: str, base: str, limit: int) -> list[RepositoryHistory]:

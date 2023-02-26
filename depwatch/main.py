@@ -1,7 +1,7 @@
 import typer
 from rich import print
 
-from deploywatch.command import generate_histories
+from depwatch.command import generate_histories
 
 
 def main(

@@ -1,7 +1,7 @@
 [tool.pdm]
 
 [project]
-name = "deploy-watch"
+name = "depwatch"
 version = "0.1.0"
 description = ""
 authors = [
