@@ -20,8 +20,11 @@ jobs:
           enable-pep582: true
       - name: Install dependencies
         run: pdm install
-      - name: Lint
-        run: pdm run
-      - name: Test with pytest
-        run: |
-          pytest  
+      - name: Check type
+        run: pdm run check-type
+      - name: Check Lint
+        run: pdm run check-lint
+      - name: Check Format
+        run: pdm run check-format
+      - name: Test
+        run: pdm run test
