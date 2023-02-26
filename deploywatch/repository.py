@@ -1,16 +1,31 @@
 from github import Github
 import os
 from datetime import datetime, timezone
+from deploywatch.exception import DeployWatchException
 
 from deploywatch.history import RepositoryHistory
 
 
-def get_repository_history(name: str, limit: int) -> list[RepositoryHistory]:
+def get_main_branch(name: str) -> str:
+    gh = Github(os.environ.get('GITHUB_ACCESS_TOKEN'))
+
+    repo = gh.get_repo(name)
+    branches = repo.get_branches()
+
+    if 'main' in [b.name for b in branches]:
+        return 'main'
+    elif 'master' in [b.name for b in branches]:
+        return 'master'
+    else:
+        raise DeployWatchException("'main' or 'master' branch was not found")
+
+
+def get_repository_history(name: str, base: str, limit: int) -> list[RepositoryHistory]:
     histories = []
 
     gh = Github(os.environ.get('GITHUB_ACCESS_TOKEN'), per_page=100)
     repo = gh.get_repo(name)
-    pulls = repo.get_pulls(state='closed')[:limit]
+    pulls = repo.get_pulls(state='closed', base=base)[:limit]
 
     for p in pulls:
         first_committed_at: datetime = p.get_commits()[0].commit.author.date.replace(tzinfo=timezone.utc)

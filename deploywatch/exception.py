@@ -1,0 +1,2 @@
+class DeployWatchException(Exception):
+    pass
