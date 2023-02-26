@@ -2,9 +2,6 @@ from unittest.mock import patch, Mock
 
 from deploywatch import command
 from deploywatch.command import generate_histories
-from deploywatch.history import History, RepositoryHistory, DeploymentHistory
-
-from datetime import datetime
 
 
 class TestCommand:

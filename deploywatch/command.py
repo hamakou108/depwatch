@@ -1,8 +1,6 @@
 from dotenv import load_dotenv
 
-from itertools import zip_longest
-
-from deploywatch.history import History, create_histories
+from deploywatch.history import create_histories
 from deploywatch.repository import get_main_branch, get_repository_history
 from deploywatch.deployment import get_deployment_history
 from deploywatch.presentation import write_histories
