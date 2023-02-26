@@ -4,7 +4,7 @@ on:
     branches: master
   pull_request:
 jobs:
-  test:
+  check-and-test:
 
     runs-on: ubuntu-latest
     strategy:
