@@ -56,15 +56,15 @@ class DeploymentHistory:
 
 
 def create_histories(
-        repositoryHistories: list[RepositoryHistory],
-        deploymentHistories: list[DeploymentHistory],
+        repository_histories: list[RepositoryHistory],
+        deployment_histories: list[DeploymentHistory],
     ) -> list[History]:
     shaToDeploymentHistoryMap: dict[str, DeploymentHistory] = {}
-    for dh in deploymentHistories:
+    for dh in deployment_histories:
         shaToDeploymentHistoryMap[dh.sha] = dh
 
     histories = []
-    for rh in repositoryHistories:
+    for rh in repository_histories:
         dh = shaToDeploymentHistoryMap.get(rh.merge_commit_sha)
         histories.append(History(
             rh.first_committed_at,
