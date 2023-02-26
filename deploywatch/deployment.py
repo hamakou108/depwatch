@@ -28,6 +28,9 @@ def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentH
             if latest_stopped_at is None or current_stopped_at < latest_stopped_at:
                 latest_stopped_at = current_stopped_at
 
+        if latest_stopped_at is None:
+            continue
+
         histories.append(DeploymentHistory(latest_stopped_at, p.get('vcs').get('revision')))
 
     return histories
