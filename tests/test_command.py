@@ -1,7 +1,7 @@
 from unittest.mock import patch, Mock
 
-from deploywatch import command
-from deploywatch.command import generate_histories
+from depwatch import command
+from depwatch.command import generate_histories
 
 
 class TestCommand:

@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from pycircleci.api import Api
 
-from deploywatch.history import DeploymentHistory
+from depwatch.history import DeploymentHistory
 
 
 def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentHistory]:
