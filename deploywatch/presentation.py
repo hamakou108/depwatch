@@ -5,7 +5,8 @@ from deploywatch.history import History
 
 
 def write_histories(filename: str, histories: list[History]):
-    dirname = os.environ.get('OUTPUT_DIR') if os.environ.get('OUTPUT_DIR', '') != '' else '.'
+    dirname = str(os.environ.get('OUTPUT_DIR') or '')
+    dirname = dirname if dirname != '' else '.'
 
     with open(dirname + '/' + filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
