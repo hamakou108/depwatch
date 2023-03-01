@@ -1,5 +1,6 @@
 import csv
 import os
+from datetime import datetime
 
 from depwatch.history import History
 
@@ -12,4 +13,11 @@ def write_histories(filename: str, histories: list[History]):
         writer = csv.writer(csvfile, delimiter=",")
         writer.writerow(History.keys())
         for h in histories:
-            writer.writerow(h.values())
+            formatted_values = []
+            for v in h.values():
+                if isinstance(v, datetime):
+                    formatted_values.append(v.isoformat())
+                else:
+                    formatted_values.append(v)
+
+            writer.writerow(formatted_values)
