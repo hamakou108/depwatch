@@ -15,5 +15,9 @@ def main(
     print(":sparkles::sparkles: [green]Completed![/green] :sparkles::sparkles:")
 
 
+def main_cli():
+    typer.run(main)
+
+
 if __name__ == "__main__":
     typer.run(main)
