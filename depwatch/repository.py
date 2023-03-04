@@ -28,6 +28,9 @@ def get_repository_history(name: str, base: str, limit: int) -> list[RepositoryH
     pulls = repo.get_pulls(state="closed", base=base)[:limit]
 
     for p in pulls:
+        if p.merged_at is None:
+            continue
+
         first_committed_at: datetime = p.get_commits()[0].commit.author.date.replace(
             tzinfo=timezone.utc
         )
