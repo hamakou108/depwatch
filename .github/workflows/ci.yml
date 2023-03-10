@@ -1,16 +1,16 @@
 name: CI
+
 on:
   push:
     branches: main
   pull_request:
+
 jobs:
   check-and-test:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.11"]
-
     steps:
       - uses: actions/checkout@v3
       - name: Setup PDM
