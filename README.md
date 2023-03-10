@@ -49,6 +49,8 @@ If you use fine-grained personal access tokens, specify read-only permissions fo
 
 Comming soon!
 
+- TODO: Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
 ## License
 
 This code is released under the MIT License. See [LICENSE](/LICENSE) for details.
