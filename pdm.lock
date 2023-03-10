@@ -295,6 +295,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "types-requests"
+version = "2.28.11.15"
+summary = "Typing stubs for requests"
+dependencies = [
+    "types-urllib3<1.27",
+]
+
+[[package]]
+name = "types-urllib3"
+version = "1.26.25.8"
+summary = "Typing stubs for urllib3"
+
+[[package]]
 name = "typing-extensions"
 version = "4.5.0"
 requires_python = ">=3.7"
@@ -314,7 +327,7 @@ summary = "Module for decorators, wrappers and monkey patching."
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:f84e57a7cf38fef3b134cdd10cfeb7c63054919f2dc0c9357c4e70f5366e39ac"
+content_hash = "sha256:b12b7f9d62a4c09e2ebf4df46c7fe7c5cddddc4f9c1d25543c646b040f6580df"
 
 [metadata.files]
 "attrs 22.2.0" = [
@@ -662,6 +675,14 @@ content_hash = "sha256:f84e57a7cf38fef3b134cdd10cfeb7c63054919f2dc0c9357c4e70f53
 "typer 0.7.0" = [
     {url = "https://files.pythonhosted.org/packages/0d/44/56c3f48d2bb83d76f5c970aef8e2c3ebd6a832f09e3621c5395371fe6999/typer-0.7.0-py3-none-any.whl", hash = "sha256:b5e704f4e48ec263de1c0b3a2387cd405a13767d2f907f44c1a08cbad96f606d"},
     {url = "https://files.pythonhosted.org/packages/e1/45/bcbc581f87c8d8f2a56b513eb994d07ea4546322818d95dc6a3caf2c928b/typer-0.7.0.tar.gz", hash = "sha256:ff797846578a9f2a201b53442aedeb543319466870fbe1c701eab66dd7681165"},
+]
+"types-requests 2.28.11.15" = [
+    {url = "https://files.pythonhosted.org/packages/40/78/47e77dfeb78ad1f7bb43b0d92cba6fa8d13dd4367cc049a1b1f61249f7b1/types_requests-2.28.11.15-py3-none-any.whl", hash = "sha256:a05e4c7bc967518fba5789c341ea8b0c942776ee474c7873129a61161978e586"},
+    {url = "https://files.pythonhosted.org/packages/fc/9b/a29ff9475078dce0643de2a3fb0960fb6e8f1db75c65a80139165673a7cf/types-requests-2.28.11.15.tar.gz", hash = "sha256:fc8eaa09cc014699c6b63c60c2e3add0c8b09a410c818b5ac6e65f92a26dde09"},
+]
+"types-urllib3 1.26.25.8" = [
+    {url = "https://files.pythonhosted.org/packages/03/58/5294b587731ecd9255778b7db574fae40a9113e184e6f62652d8952c5cf6/types-urllib3-1.26.25.8.tar.gz", hash = "sha256:ecf43c42d8ee439d732a1110b4901e9017a79a38daca26f08e42c8460069392c"},
+    {url = "https://files.pythonhosted.org/packages/30/29/3ae36523276099dfe4835014875a464c745e8588bf8bec3cab1cb7850d34/types_urllib3-1.26.25.8-py3-none-any.whl", hash = "sha256:95ea847fbf0bf675f50c8ae19a665baedcf07e6b4641662c4c3c72e7b2edf1a9"},
 ]
 "typing-extensions 4.5.0" = [
     {url = "https://files.pythonhosted.org/packages/31/25/5abcd82372d3d4a3932e1fa8c3dbf9efac10cc7c0d16e78467460571b404/typing_extensions-4.5.0-py3-none-any.whl", hash = "sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4"},
