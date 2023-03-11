@@ -1,6 +1,9 @@
 import os
 from datetime import datetime
 from pycircleci.api import Api
+from requests import HTTPError
+from requests.models import Response
+from typing import cast
 
 from depwatch.history import DeploymentHistory
 
@@ -19,6 +22,14 @@ def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentH
     for p in pipelines:
         if len(p.get("errors")) != 0:
             continue
+
+        try:
+            workflows = ci.get_pipeline_workflow(p.get("id"))
+        except HTTPError as e:
+            if cast(Response, e.response).status_code == 404:
+                continue
+            else:
+                raise e
 
         workflows = ci.get_pipeline_workflow(p.get("id"))
 
