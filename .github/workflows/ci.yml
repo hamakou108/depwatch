@@ -17,7 +17,6 @@ jobs:
         uses: pdm-project/setup-pdm@v3
         with:
           python-version: ${{ matrix.python-version }}
-          enable-pep582: true
       - name: Install dependencies
         run: pdm install
       - name: Check type
