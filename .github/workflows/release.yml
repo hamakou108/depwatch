@@ -28,7 +28,6 @@ jobs:
         uses: pdm-project/setup-pdm@v3
         with:
           python-version: "3.11"
-          enable-pep582: true
         if: ${{ steps.release.outputs.release_created }}
       - name: Publish package
         run: |
