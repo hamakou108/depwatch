@@ -2,7 +2,6 @@ from github import Github
 import os
 from datetime import datetime, timezone
 from depwatch.exception import DepwatchException
-
 from depwatch.history import RepositoryHistory
 
 
