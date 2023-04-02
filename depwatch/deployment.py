@@ -9,6 +9,15 @@ from depwatch.history import DeploymentHistory
 
 
 def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentHistory]:
+    def __get_pipeline_workflow(p):
+        try:
+            return ci.get_pipeline_workflow(p.get("id"))
+        except HTTPError as e:
+            if cast(Response, e.response).status_code == 404:
+                return []
+            else:
+                raise e
+
     histories = []
 
     ci = Api(
@@ -23,15 +32,7 @@ def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentH
         if len(p.get("errors")) != 0:
             continue
 
-        try:
-            workflows = ci.get_pipeline_workflow(p.get("id"))
-        except HTTPError as e:
-            if cast(Response, e.response).status_code == 404:
-                continue
-            else:
-                raise e
-
-        workflows = ci.get_pipeline_workflow(p.get("id"))
+        workflows = __get_pipeline_workflow(p)
 
         stopped_at_list = [w.get("stopped_at") for w in workflows]
         latest_stopped_at = None
