@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from depwatch.history import create_histories
 from depwatch.repository import get_main_branch, get_repository_history
 from depwatch.deployment import get_deployment_history
-from depwatch.presentation import write_histories
+from depwatch.writer import write_histories
 
 
 def generate_histories(name: str, code_only: bool, limit: int):
