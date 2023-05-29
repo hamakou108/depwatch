@@ -8,47 +8,51 @@ from typing import cast
 from depwatch.history import DeploymentHistory
 
 
-def get_deployment_history(name: str, base: str, limit: int) -> list[DeploymentHistory]:
-    def __get_pipeline_workflow(p):
+def get_deployment_history(workflow_ids: list[str]) -> list[DeploymentHistory]:
+    def __get_workflow(id):
         try:
-            return ci.get_pipeline_workflow(p.get("id"))
+            return ci.get_workflow(id)
         except HTTPError as e:
             if cast(Response, e.response).status_code == 404:
                 return []
             else:
                 raise e
 
+    def __is_succeeded_workflows(workflow) -> bool:
+        return (
+            workflow.get("status") == "success"
+            and workflow.get("stopped_at") is not None
+        )
+
     histories = []
 
     ci = Api(
         token=os.environ.get("CIRCLECI_ACCESS_TOKEN"), url="https://circleci.com/api"
     )
-    user_name, project = name.split("/")
-    pipelines = ci.get_project_pipelines(
-        user_name, project, branch=base, paginate=True, limit=limit
-    )
 
-    for p in pipelines:
-        if len(p.get("errors")) != 0:
-            continue
+    for id in workflow_ids:
+        workflows = __get_workflow(id)
+        succeeded_workflows = filter(__is_succeeded_workflows, workflows)
 
-        workflows = __get_pipeline_workflow(p)
-
-        stopped_at_list = [w.get("stopped_at") for w in workflows]
-        latest_stopped_at = None
-        for s in stopped_at_list:
-            if s is None:
+        first_succeeded_workflow = None
+        for w in succeeded_workflows:
+            if first_succeeded_workflow is None:
+                first_succeeded_workflow = w
                 continue
 
-            current_stopped_at = datetime.fromisoformat(s)
-            if latest_stopped_at is None or current_stopped_at < latest_stopped_at:
-                latest_stopped_at = current_stopped_at
+            if datetime.fromisoformat(w.get("stopped_at")) < datetime.fromisoformat(
+                first_succeeded_workflow.get("stopped_at")
+            ):
+                first_succeeded_workflow = w
 
-        if latest_stopped_at is None:
+        if first_succeeded_workflow is None:
             continue
 
         histories.append(
-            DeploymentHistory(latest_stopped_at, p.get("vcs").get("revision"))
+            DeploymentHistory(
+                first_succeeded_workflow.get("id"),
+                datetime.fromisoformat(first_succeeded_workflow.get("stopped_at")),
+            )
         )
 
     return histories
