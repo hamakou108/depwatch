@@ -7,12 +7,16 @@ from depwatch.command import generate_histories
 class TestCommand:
     @patch.object(command, "write_histories")
     @patch.object(command, "get_deployment_history", return_value=[])
+    @patch.object(
+        command, "convert_repository_history_to_workflow_ids", return_value=[]
+    )
     @patch.object(command, "get_repository_history", return_value=[])
     @patch.object(command, "get_main_branch", return_value="main")
     def test_generate_histories(
         self,
         get_main_branch_mock: Mock,
         get_repository_history_mock: Mock,
+        convert_repository_history_to_workflow_ids_mock: Mock,
         get_deployment_history_mock: Mock,
         write_histories_mock: Mock,
     ):
@@ -22,9 +26,8 @@ class TestCommand:
         get_repository_history_mock.assert_called_once_with(
             "hamakou108/my_project", "main", 100
         )
-        get_deployment_history_mock.assert_called_once_with(
-            "hamakou108/my_project", "main", 100
-        )
+        convert_repository_history_to_workflow_ids_mock.assert_called_once_with([])
+        get_deployment_history_mock.assert_called_once_with([])
         write_histories_mock.assert_called()
 
     @patch.object(command, "write_histories")
