@@ -12,20 +12,16 @@ class TestDeployment:
     def test_get_deployment_history(self, mock_Api: Mock):
         mock_ci = MagicMock()
         mock_ci.get_workflow.side_effect = [
-            [
-                {
-                    "id": "40020909-fd66-4657-b3e4-8872627507d2",
-                    "status": "success",
-                    "stopped_at": "2023-01-01T00:00:00.000Z",
-                },
-            ],
-            [
-                {
-                    "id": "84abef06-1fa2-48ec-875e-382e9b7add78",
-                    "status": "success",
-                    "stopped_at": "2023-01-02T00:00:00.000Z",
-                },
-            ],
+            {
+                "id": "40020909-fd66-4657-b3e4-8872627507d2",
+                "status": "success",
+                "stopped_at": "2023-01-01T00:00:00.000Z",
+            },
+            {
+                "id": "84abef06-1fa2-48ec-875e-382e9b7add78",
+                "status": "success",
+                "stopped_at": "2023-01-02T00:00:00.000Z",
+            },
         ]
         mock_Api.return_value = mock_ci
 
@@ -64,13 +60,11 @@ class TestDeployment:
         self, mock_Api: Mock
     ):
         mock_ci = MagicMock()
-        mock_ci.get_workflow.return_value = [
-            {
-                "id": "40020909-fd66-4657-b3e4-8872627507d2",
-                "status": "success",
-                "stopped_at": None,
-            },
-        ]
+        mock_ci.get_workflow.return_value = {
+            "id": "40020909-fd66-4657-b3e4-8872627507d2",
+            "status": "success",
+            "stopped_at": None,
+        }
         mock_Api.return_value = mock_ci
 
         workflow_ids = [
@@ -85,13 +79,11 @@ class TestDeployment:
         self, mock_Api: Mock
     ):
         mock_ci = MagicMock()
-        mock_ci.get_workflow.return_value = [
-            {
-                "id": "40020909-fd66-4657-b3e4-8872627507d2",
-                "status": "failed",
-                "stopped_at": "2023-01-01T00:00:00.000Z",
-            },
-        ]
+        mock_ci.get_workflow.return_value = {
+            "id": "40020909-fd66-4657-b3e4-8872627507d2",
+            "status": "failed",
+            "stopped_at": "2023-01-01T00:00:00.000Z",
+        }
         mock_Api.return_value = mock_ci
 
         workflow_ids = [
