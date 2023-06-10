@@ -51,11 +51,7 @@ class TestRepository:
         assert result[0].first_committed_at == datetime(2021, 1, 1, tzinfo=timezone.utc)
         assert result[0].merged_at == datetime(2021, 1, 3, tzinfo=timezone.utc)
         assert len(result[0].merge_commit_sha) == 40
-        assert result[0].check_run_app_slug == "circleci-checks"
-        assert (
-            result[0].check_run_external_id
-            == '{"workflow-id":"10d1e2e1-cd4d-4662-a654-ff0cb02ad58d","actor-id":"20a538b5-8416-4419-b8da-a504c3835c4a"}'
-        )
+        assert len(result[0].check_runs) == 1
 
     @patch("depwatch.repository.Github")
     def test_get_repository_history_if_a_pull_request_with_no_merge_commit_is_included(
@@ -85,8 +81,9 @@ class TestRepository:
         result = repository.get_repository_history("hamakou108/my_project", "main", 100)
 
         assert len(result) == 1
-        assert result[0].check_run_app_slug == None
-        assert result[0].check_run_external_id == None
+        assert len(result[0].check_runs) == 0
+        # assert result[0].check_run_app_slug == None
+        # assert result[0].check_run_external_id == None
 
     def create_mock_repo_with_branches(self, branches: list[str]):
         mock_repo = MagicMock()
@@ -102,18 +99,20 @@ class TestRepository:
         return mock_repo
 
     def create_mock_commit(self, has_check_runs: bool = True):
-        mock_check_run = MagicMock(spec=["app", "external_id"])
-        mock_check_run.app.slug = "circleci-checks"
-        mock_check_run.external_id = '{"workflow-id":"10d1e2e1-cd4d-4662-a654-ff0cb02ad58d","actor-id":"20a538b5-8416-4419-b8da-a504c3835c4a"}'
+        mock_check_run = MagicMock(spec=["raw_data"])
+        mock_check_run.raw_data = {
+            "name": "awesome_workflow",
+            "external_id": '{"workflow-id":"10d1e2e1-cd4d-4662-a654-ff0cb02ad58d","actor-id":"20a538b5-8416-4419-b8da-a504c3835c4a"}',
+            "app": {
+                "slug": "circleci-checks",
+            },
+        }
 
-        # Unable to import PaginatestList, create mock with required I/F
+        # Since PaginatedList from PyGitHub cannot be imported, mock it using a list instead.
         check_runs = [mock_check_run] if has_check_runs else []
-        mock_check_runs = MagicMock()
-        mock_check_runs.__getitem__.side_effect = check_runs.__getitem__
-        mock_check_runs.totalCount = len(check_runs)
 
         mock_commit = MagicMock(spec=["get_check_runs"])
-        mock_commit.get_check_runs.return_value = mock_check_runs
+        mock_commit.get_check_runs.return_value = check_runs
 
         return mock_commit
 

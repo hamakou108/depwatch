@@ -38,17 +38,13 @@ def get_repository_history(name: str, base: str, limit: int) -> list[RepositoryH
 
         merge_commit = repo.get_commit(merge_commit_sha)
         check_runs = merge_commit.get_check_runs()
-        check_run = check_runs[0] if check_runs.totalCount > 0 else None
-        check_run_app_slug = check_run.app.slug if check_run is not None else None
-        check_run_external_id = check_run.external_id if check_run is not None else None
 
         histories.append(
             RepositoryHistory(
                 first_committed_at,
                 merged_at,
                 merge_commit_sha,
-                check_run_app_slug,
-                check_run_external_id,
+                [item.raw_data for item in check_runs],
             )
         )
 

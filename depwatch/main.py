@@ -10,8 +10,12 @@ def main(
         False, help="do not retrieve deployment histories from CI"
     ),
     limit: int = typer.Option(100, help="count limit for retrieving history"),
+    workflow_name: str = typer.Option(
+        None,
+        help="The workflow name of the CI to be obtained. This is useful when there are multiple workflows triggered by commits to the main branch.",
+    ),
 ):
-    generate_histories(name, code_only, limit)
+    generate_histories(name, code_only, limit, workflow_name)
     print(":sparkles::sparkles: [green]Completed![/green] :sparkles::sparkles:")
 
 
