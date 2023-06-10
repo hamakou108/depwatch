@@ -2,8 +2,6 @@ from datetime import datetime
 import json
 from typing import Optional
 
-from depwatch.exception import DepwatchException
-
 
 class History:
     def __init__(
@@ -43,34 +41,45 @@ class RepositoryHistory:
         first_committed_at: datetime,
         merged_at: datetime,
         merge_commit_sha: str,
-        check_run_app_slug: str | None = None,
-        check_run_external_id: str | None = None,
+        check_runs: list,
     ):
         self.first_committed_at = first_committed_at
         self.merged_at = merged_at
         self.merge_commit_sha = merge_commit_sha
-        self.check_run_app_slug = check_run_app_slug
-        self.check_run_external_id = check_run_external_id
+        self.check_runs = check_runs
 
-    def get_workflow_id(self) -> str | None:
-        if (
-            self.check_run_app_slug is None
-            or self.check_run_app_slug != "circleci-checks"
-        ):
+    def __get_target_check_run(self, name: str | None = None) -> dict | None:
+        if name is None:
+            return self.check_runs[0]
+
+        try:
+            return next(cr for cr in self.check_runs if cr["name"] == name)
+        except StopIteration:
             return None
 
-        if self.check_run_external_id is None:
-            raise DepwatchException("'check_run.external_id' was not found")
+    def get_workflow_id(self, name: str | None = None) -> str | None:
+        if len(self.check_runs) == 0:
+            return None
 
-        decoded_external_id = json.loads(self.check_run_external_id)
+        check_run = self.__get_target_check_run(name)
 
-        return decoded_external_id.get("workflow-id")
+        if check_run is None:
+            return None
+
+        if check_run["app"]["slug"] != "circleci-checks":
+            return None
+
+        decoded_external_id = json.loads(check_run["external_id"])
+
+        return decoded_external_id["workflow-id"]
 
 
 def convert_repository_history_to_workflow_ids(
-    repository_histories: list[RepositoryHistory],
+    repository_histories: list[RepositoryHistory], workflow_name: str | None = None
 ) -> list[str]:
-    raw_workflow_ids = [history.get_workflow_id() for history in repository_histories]
+    raw_workflow_ids = [
+        history.get_workflow_id(workflow_name) for history in repository_histories
+    ]
     return [x for x in raw_workflow_ids if x is not None]
 
 
@@ -87,6 +96,7 @@ class DeploymentHistory:
 def create_histories(
     repository_histories: list[RepositoryHistory],
     deployment_histories: list[DeploymentHistory],
+    workflow_name: str | None = None,
 ) -> list[History]:
     idToDeploymentHistoryMap: dict[str, DeploymentHistory] = {}
     for dh in deployment_histories:
@@ -94,7 +104,7 @@ def create_histories(
 
     histories = []
     for rh in repository_histories:
-        workflow_id = rh.get_workflow_id()
+        workflow_id = rh.get_workflow_id(workflow_name)
         matched_dh = (
             idToDeploymentHistoryMap.get(workflow_id)
             if workflow_id is not None

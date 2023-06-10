@@ -26,7 +26,9 @@ class TestCommand:
         get_repository_history_mock.assert_called_once_with(
             "hamakou108/my_project", "main", 100
         )
-        convert_repository_history_to_workflow_ids_mock.assert_called_once_with([])
+        convert_repository_history_to_workflow_ids_mock.assert_called_once_with(
+            [], None
+        )
         get_deployment_history_mock.assert_called_once_with([])
         write_histories_mock.assert_called()
 
@@ -41,6 +43,6 @@ class TestCommand:
         get_deployment_history_mock: Mock,
         write_histories_mock: Mock,
     ):
-        generate_histories("hamakou108/my_project", True, 100)
+        generate_histories("hamakou108/my_project", True, 100, None)
 
         get_deployment_history_mock.assert_not_called()
