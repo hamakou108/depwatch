@@ -4,6 +4,10 @@ from rich import print
 from depwatch.command import generate_histories
 
 
+app = typer.Typer()
+
+
+@app.command()
 def main(
     name: str,
     code_only: bool = typer.Option(
@@ -20,8 +24,8 @@ def main(
 
 
 def main_cli():
-    typer.run(main)
+    app()
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    app()
