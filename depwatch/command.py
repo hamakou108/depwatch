@@ -11,7 +11,7 @@ from depwatch.writer import write_histories
 
 def generate_histories(
     name: str, code_only: bool, limit: int, workflow_name: str | None = None
-):
+) -> None:
     load_dotenv()
 
     base = get_main_branch(name)
