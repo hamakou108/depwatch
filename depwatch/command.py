@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from depwatch.date_utils import DateRange
 
 from depwatch.history import (
     convert_repository_history_to_workflow_ids,
@@ -10,13 +11,17 @@ from depwatch.writer import write_histories
 
 
 def generate_histories(
-    name: str, code_only: bool, limit: int, workflow_name: str | None = None
+    name: str,
+    code_only: bool,
+    limit: int,
+    created_at: DateRange | None = None,
+    workflow_name: str | None = None,
 ) -> None:
     load_dotenv()
 
     base = get_main_branch(name)
 
-    repository_histories = get_repository_history(name, base, limit)
+    repository_histories = get_repository_history(name, base, limit, created_at)
 
     # CircleCI
     deployment_histories = []
