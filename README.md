@@ -45,6 +45,22 @@ GitHub offers [two types of personal access tokens](https://docs.github.com/en/a
 
 If you use fine-grained personal access tokens, specify read-only permissions for **Contents**, **Metadata**, and **Pull requests**. If you use classic personal access tokens, specify **repo** scope.
 
+### Options
+
+```shell-session
+# get the latest 10 items (default is `100`)
+depwatch your_name/your_project --limit 10
+
+# get the item of PRs created from January 1, 2023, to March 31, 2023
+depwatch your_name/your_project --created-at 2023-01-01..2023-03-31
+
+# get only the data of PRs (do not get the data of CI)
+depwatch your_name/your_project --code-only
+
+# get by specifying the deployment workflow name of CI
+depwatch your_name/your_project -workflow-name deploy-to-production
+```
+
 ## Contributing
 
 Comming soon!
