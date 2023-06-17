@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.3](https://github.com/hamakou108/depwatch/compare/v0.1.2...v0.1.3) (2023-06-17)
+
+
+### Features
+
+* add created_at option ([#59](https://github.com/hamakou108/depwatch/issues/59)) ([fe7faba](https://github.com/hamakou108/depwatch/commit/fe7faba651914a08d8c2fc6776306db905424b76))
+* add workflow name option ([#56](https://github.com/hamakou108/depwatch/issues/56)) ([4e7ba4b](https://github.com/hamakou108/depwatch/commit/4e7ba4be2e82087dd420f4f9626f0ceeb1749f6c))
+
+
+### Bug Fixes
+
+* fixing a bug that confuses types ([#53](https://github.com/hamakou108/depwatch/issues/53)) ([bbb7151](https://github.com/hamakou108/depwatch/commit/bbb7151eb0d2516ae6e140f749af4b1cb77ce0e4))
+* get workflow by id ([#51](https://github.com/hamakou108/depwatch/issues/51)) ([d6898ae](https://github.com/hamakou108/depwatch/commit/d6898aec6cb3820eefe38f6f16e362f405434573))
+
 ## [0.1.2](https://github.com/hamakou108/depwatch/compare/v0.1.1...v0.1.2) (2023-04-07)
 
 
