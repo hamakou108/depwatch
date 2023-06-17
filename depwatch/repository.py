@@ -1,6 +1,7 @@
 from github import Github
 import os
 from datetime import datetime, timezone
+from depwatch.date_utils import DateRange, convert_date_range_to_str_for_search_query
 from depwatch.exception import DepwatchException
 from depwatch.history import RepositoryHistory
 
@@ -19,12 +20,22 @@ def get_main_branch(name: str) -> str:
         raise DepwatchException("'main' or 'master' branch was not found")
 
 
-def get_repository_history(name: str, base: str, limit: int) -> list[RepositoryHistory]:
+def get_repository_history(
+    name: str, base: str, limit: int, created_at: DateRange | None = None
+) -> list[RepositoryHistory]:
     histories = []
 
     gh = Github(os.environ.get("GITHUB_ACCESS_TOKEN"), per_page=100)
     repo = gh.get_repo(name)
-    pulls = repo.get_pulls(state="closed", base=base)[:limit]
+    created_at_query = (
+        f"created:{convert_date_range_to_str_for_search_query(created_at)}"
+        if created_at is not None
+        else ""
+    )
+    issues = gh.search_issues(
+        f"repo:{name} type:pr is:merged {created_at_query}", "created", "desc"
+    )[:limit]
+    pulls = [i.as_pull_request() for i in issues]
 
     for p in pulls:
         if p.merged_at is None:
