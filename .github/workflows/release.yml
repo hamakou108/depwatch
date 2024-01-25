@@ -28,7 +28,7 @@ jobs:
         # a new release is created:
         if: ${{ steps.release.outputs.release_created }}
       - name: Setup PDM
-        uses: pdm-project/setup-pdm@v3
+        uses: pdm-project/setup-pdm@v4
         with:
           python-version: "3.11"
         if: ${{ steps.release.outputs.release_created }}
