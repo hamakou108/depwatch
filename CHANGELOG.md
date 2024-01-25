@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/hamakou108/depwatch/compare/v0.1.3...v0.1.4) (2024-01-25)
+
+
+### Documentation
+
+* add description of CLI options ([#60](https://github.com/hamakou108/depwatch/issues/60)) ([dcf85a1](https://github.com/hamakou108/depwatch/commit/dcf85a12d4c127c68ce8a1881a446ec555a70d24))
+
 ## [0.1.3](https://github.com/hamakou108/depwatch/compare/v0.1.2...v0.1.3) (2023-06-17)
 
 
