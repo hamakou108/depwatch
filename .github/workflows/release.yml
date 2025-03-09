@@ -9,20 +9,15 @@ jobs:
   create-the-release-pull-request-and-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate GitHub Apps token
-        id: generate_token
-        uses: tibdex/github-app-token@v2
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.PRIVATE_KEY }}
-      - uses: google-github-actions/release-please-action@v3
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
-          token: ${{ steps.generate_token.outputs.token }}
-          release-type: python
-          package-name: depwatch
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
+          token: ${{ steps.app-token.outputs.token }}
       - uses: actions/checkout@v4
         # these if statements ensure that a publication only occurs when
         # a new release is created:
